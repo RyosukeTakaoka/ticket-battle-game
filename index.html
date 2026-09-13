@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TICKET BATTLE GAME</title>
+<title>TICKET BATTLE</title>
 
 <style>
 * {
@@ -12,390 +12,383 @@
 
 body {
   margin: 0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-  background: #f4f6f9;
-  color: #171717;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+               "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  background: #f3f5f9;
+  color: #182033;
 }
 
-button,
-input,
-select {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-.header {
+header {
   background: #111827;
   color: white;
-  padding: 18px 20px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.header-inner {
-  max-width: 850px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
+  padding: 18px 24px;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: 2px;
   font-size: 20px;
-  font-weight: 900;
-  letter-spacing: 1px;
 }
 
-.header-sub {
-  font-size: 11px;
-  color: #aeb7c5;
+.screen {
+  display: none;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px 18px 60px;
 }
 
-.container {
-  max-width: 850px;
-  margin: auto;
-  padding: 25px 15px 50px;
+.screen.active {
+  display: block;
 }
 
 .card {
   background: white;
-  border-radius: 16px;
-  padding: 24px;
-  margin-bottom: 18px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.07);
-}
-
-.title {
-  font-size: 26px;
-  font-weight: 900;
-  margin-bottom: 8px;
-}
-
-.subtitle {
-  color: #667085;
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-.badge {
-  display: inline-block;
-  background: #111827;
-  color: white;
-  border-radius: 999px;
-  padding: 5px 10px;
-  font-size: 11px;
-  font-weight: bold;
-  margin-bottom: 12px;
-}
-
-.countdown {
-  text-align: center;
-  padding: 35px 10px;
-}
-
-.countdown-number {
-  font-size: 76px;
-  font-weight: 900;
-  color: #e11d48;
-  line-height: 1;
-  margin: 20px 0;
-}
-
-.release-text {
-  font-size: 25px;
-  font-weight: 900;
-}
-
-.reload-box {
-  background: #fff7ed;
-  border: 2px solid #fb923c;
-  border-radius: 14px;
-  padding: 20px;
-  text-align: center;
-  margin-top: 20px;
-}
-
-.reload-box strong {
-  color: #ea580c;
-}
-
-.big-button {
-  width: 100%;
-  border: 0;
-  border-radius: 12px;
-  padding: 16px;
-  font-weight: 900;
-  font-size: 17px;
-  color: white;
-  background: #111827;
-  margin-top: 15px;
-}
-
-.big-button:hover {
-  opacity: 0.9;
-}
-
-.blue-button {
-  background: #2563eb;
-}
-
-.red-button {
-  background: #dc2626;
-}
-
-.green-button {
-  background: #059669;
-}
-
-.gray-button {
-  background: #64748b;
-}
-
-.progress {
-  height: 13px;
-  background: #e5e7eb;
-  border-radius: 999px;
-  overflow: hidden;
-  margin: 20px 0;
-}
-
-.progress-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #2563eb, #7c3aed, #db2777);
-  transition: width .2s;
-}
-
-.queue-number {
-  text-align: center;
-  font-size: 42px;
-  font-weight: 900;
-  margin: 20px 0 5px;
-}
-
-.queue-label {
-  text-align: center;
-  color: #667085;
-}
-
-.fast {
-  color: #059669;
-  font-weight: 900;
-}
-
-.section-title {
-  font-size: 20px;
-  font-weight: 900;
-  margin-bottom: 16px;
-}
-
-.option-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
-.option {
-  border: 2px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 15px;
-  background: white;
-  text-align: left;
-  transition: .15s;
-}
-
-.option:hover {
-  border-color: #2563eb;
-}
-
-.option.selected {
-  border-color: #2563eb;
-  background: #eff6ff;
-  box-shadow: 0 0 0 2px #bfdbfe;
-}
-
-.option-name {
-  font-weight: 900;
-}
-
-.option-info {
-  font-size: 12px;
-  color: #667085;
-  margin-top: 6px;
-}
-
-.difficulty {
-  margin-top: 7px;
-  font-size: 13px;
-}
-
-.fire {
-  letter-spacing: -2px;
-}
-
-.form-row {
-  margin-bottom: 15px;
-}
-
-.form-row label {
-  display: block;
-  font-size: 13px;
-  font-weight: 800;
-  margin-bottom: 6px;
-}
-
-.form-row input,
-.form-row select {
-  width: 100%;
-  border: 1px solid #d0d5dd;
-  border-radius: 10px;
-  padding: 13px;
-  background: white;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.notice {
-  background: #f8fafc;
-  border-left: 4px solid #2563eb;
-  padding: 13px;
-  font-size: 13px;
-  line-height: 1.7;
-  margin: 15px 0;
-}
-
-.warning {
-  background: #fff7ed;
-  border-left: 4px solid #f97316;
-}
-
-.result-main {
-  text-align: center;
-  padding: 20px 0;
-}
-
-.result-success {
-  color: #059669;
-  font-size: 38px;
-  font-weight: 900;
-}
-
-.result-ticket {
-  background: #111827;
-  color: white;
   border-radius: 18px;
-  padding: 22px;
-  margin: 20px 0;
+  padding: 24px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.08);
+  margin-bottom: 20px;
 }
 
-.ticket-title {
-  font-size: 12px;
-  color: #aeb7c5;
-  letter-spacing: 1px;
-}
-
-.ticket-name {
-  font-size: 25px;
-  font-weight: 900;
-  margin: 8px 0 18px;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.stat {
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 15px;
-}
-
-.stat-label {
-  color: #667085;
-  font-size: 12px;
-}
-
-.stat-value {
-  font-size: 24px;
-  font-weight: 900;
-  margin-top: 5px;
-}
-
-.score-row {
-  margin: 15px 0;
-}
-
-.score-head {
-  display: flex;
-  justify-content: space-between;
-  font-weight: 800;
-  font-size: 13px;
-}
-
-.score-bg {
-  height: 10px;
-  background: #e5e7eb;
-  border-radius: 999px;
-  overflow: hidden;
-  margin-top: 6px;
-}
-
-.score-fill {
-  height: 100%;
-  background: #2563eb;
-  border-radius: 999px;
-}
-
-.rank {
-  text-align: center;
-  font-size: 55px;
-  font-weight: 1000;
-  margin: 10px 0;
-}
-
-.small {
-  font-size: 12px;
-  color: #667085;
-}
-
-.hidden {
-  display: none !important;
+h1, h2, h3 {
+  margin-top: 0;
 }
 
 .center {
   text-align: center;
 }
 
+.small {
+  font-size: 13px;
+  color: #667085;
+}
+
+.big-number {
+  font-size: 72px;
+  font-weight: 900;
+  text-align: center;
+  margin: 50px 0;
+  font-variant-numeric: tabular-nums;
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+  transition: .15s;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  opacity: .92;
+}
+
+button:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.full-btn {
+  width: 100%;
+  margin-top: 14px;
+}
+
+.danger-btn {
+  background: #dc2626;
+}
+
+.dark-btn {
+  background: #111827;
+}
+
+.green-btn {
+  background: #059669;
+}
+
+.ticket-target {
+  border: 3px solid #2563eb;
+  background: linear-gradient(135deg, #eff6ff, #ffffff);
+  border-radius: 18px;
+  padding: 22px;
+}
+
+.target-label {
+  display: inline-block;
+  background: #2563eb;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.target-main {
+  font-size: 25px;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.target-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid #dbe4f0;
+  padding: 12px 0;
+}
+
+.target-row:first-of-type {
+  border-top: none;
+}
+
+.difficulty {
+  font-weight: 900;
+}
+
+.difficulty-1 { color: #16a34a; }
+.difficulty-2 { color: #65a30d; }
+.difficulty-3 { color: #d97706; }
+.difficulty-4 { color: #ea580c; }
+.difficulty-5 { color: #dc2626; }
+
+.warning {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #9a3412;
+  border-radius: 12px;
+  padding: 14px;
+  margin: 15px 0;
+}
+
+.info {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+  border-radius: 12px;
+  padding: 14px;
+  margin: 15px 0;
+}
+
+.queue-number {
+  font-size: 48px;
+  font-weight: 900;
+  text-align: center;
+  margin: 25px 0 10px;
+}
+
+.queue-bar {
+  height: 14px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.queue-progress {
+  height: 100%;
+  width: 0%;
+  background: #2563eb;
+  transition: width .2s;
+}
+
+.stage-title {
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.option-btn {
+  background: white;
+  color: #182033;
+  border: 2px solid #dbe2ea;
+  text-align: left;
+  min-height: 80px;
+}
+
+.option-btn:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.option-btn.selected {
+  border-color: #2563eb;
+  background: #dbeafe;
+}
+
+.option-title {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.option-sub {
+  font-size: 13px;
+  color: #667085;
+  margin-top: 5px;
+}
+
+.quantity-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.quantity-btn {
+  background: white;
+  color: #182033;
+  border: 2px solid #dbe2ea;
+  font-size: 22px;
+}
+
+.quantity-btn.selected {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  font-weight: 800;
+  margin-bottom: 7px;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #dbe2ea;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #2563eb;
+}
+
+.auto-input {
+  background: #f8fafc;
+  cursor: pointer;
+}
+
+.security-wrap {
+  position: relative;
+}
+
+.security-wrap::before {
+  content: attr(data-code);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 8px;
+  color: #94a3b8;
+  opacity: .25;
+  pointer-events: none;
+}
+
+.security-wrap input {
+  position: relative;
+  background: rgba(255,255,255,.65);
+  text-align: center;
+  letter-spacing: 8px;
+  font-weight: 900;
+}
+
+.check-list {
+  margin-top: 20px;
+}
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px;
+  background: #f8fafc;
+  border-radius: 10px;
+  margin-bottom: 9px;
+}
+
+.check-item input {
+  width: auto;
+  margin-top: 3px;
+}
+
+.congestion-icon {
+  font-size: 70px;
+  text-align: center;
+}
+
+.congestion-title {
+  color: #dc2626;
+  font-size: 28px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.congestion-text {
+  text-align: center;
+  line-height: 1.8;
+}
+
+.result-success {
+  color: #059669;
+}
+
+.result-fail {
+  color: #dc2626;
+}
+
+.result-time {
+  font-size: 38px;
+  font-weight: 900;
+  text-align: center;
+  margin: 20px 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.rank {
+  font-size: 70px;
+  font-weight: 1000;
+  text-align: center;
+}
+
+#stageNotice {
+  margin-top: 12px;
+}
+
 @media (max-width: 600px) {
-  .option-grid,
-  .form-grid,
-  .stats {
-    grid-template-columns: 1fr;
-  }
-
-  .title {
-    font-size: 22px;
-  }
-
-  .countdown-number {
-    font-size: 60px;
+  .big-number {
+    font-size: 52px;
   }
 
   .queue-number {
-    font-size: 34px;
+    font-size: 36px;
+  }
+
+  .target-row {
+    flex-direction: column;
+  }
+
+  .quantity-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 </style>
@@ -403,1353 +396,1525 @@ button {
 
 <body>
 
-<header class="header">
-  <div class="header-inner">
-    <div class="logo">TICKET BATTLE</div>
-    <div class="header-sub">TICKET RUSH SIMULATOR</div>
-  </div>
+<header>
+  🎫 TICKET BATTLE
 </header>
 
-<main class="container">
+<!-- START -->
+<section id="startScreen" class="screen active">
+  <div class="card">
+    <h1>🎫 チケット争奪戦</h1>
+    <p>
+      実際の人気チケット販売をイメージした<br>
+      超高速チケット購入ゲーム。
+    </p>
 
-  <!-- START -->
-  <section id="startScreen" class="card">
-    <span class="badge">HANSHIN STYLE TICKET BATTLE</span>
-
-    <div class="title">チケット争奪戦ゲーム</div>
-
-    <div class="subtitle">
-      発売開始の瞬間を狙ってページをリロードし、<br>
-      待機列を突破してチケットを獲得しよう。
+    <div class="info">
+      今回はゲーム開始前に、あなたが狙うチケットが
+      ランダムで決まります。
     </div>
 
-    <div class="notice">
-      このゲームは架空のチケット販売ゲームです。<br>
-      実際のチケット購入・決済は行われません。
-    </div>
-
-    <button class="big-button blue-button" onclick="startGame()">
-      ゲーム開始
+    <button class="full-btn" onclick="prepareGame()">
+      今回のチケットを決める
     </button>
-  </section>
+  </div>
+</section>
 
+<!-- TARGET -->
+<section id="targetScreen" class="screen">
+  <div class="card">
+    <h2>🎯 今回あなたが狙うチケット</h2>
 
-  <!-- COUNTDOWN -->
-  <section id="countdownScreen" class="card hidden">
-    <div class="countdown">
-      <span class="badge">一般発売・先着順</span>
+    <div class="ticket-target">
+      <div class="target-label">MEMORIZE</div>
+      <div id="targetMain" class="target-main"></div>
 
-      <div class="subtitle">チケット発売まで</div>
-
-      <div id="countdownNumber" class="countdown-number">5</div>
-
-      <div id="countdownMessage" class="subtitle">
-        発売開始を待っています
-      </div>
-    </div>
-  </section>
-
-
-  <!-- RELEASE -->
-  <section id="releaseScreen" class="card hidden">
-    <div class="countdown">
-      <span class="badge">発売開始</span>
-
-      <div class="release-text">
-        チケット発売開始！
+      <div class="target-row">
+        <strong>📅 日付</strong>
+        <span id="targetDate"></span>
       </div>
 
-      <div class="reload-box">
-        <strong>ページをリロードしてください</strong>
-        <br><br>
-        リロードしたタイミングで待機列の順位が決まります。
-        <br>
-        <span class="small">
-          できるだけ早くリロードしよう！
-        </span>
+      <div class="target-row">
+        <strong>🏟 座席</strong>
+        <span id="targetSeat"></span>
       </div>
 
-      <button class="big-button red-button" onclick="manualReload()">
-        🔄 ページをリロードする
-      </button>
+      <div class="target-row">
+        <strong>🎟 枚数</strong>
+        <span id="targetQuantity"></span>
+      </div>
 
-      <div class="small center" style="margin-top:12px;">
-        ※実際のブラウザ更新ではなくゲーム内で再現します
+      <div class="target-row">
+        <strong>🔥 難易度</strong>
+        <span id="targetDifficulty"></span>
+      </div>
+
+      <div class="target-row">
+        <strong>💴 料金</strong>
+        <span id="targetPrice"></span>
+      </div>
+
+      <div class="target-row">
+        <strong>⏱ 売り切れまで</strong>
+        <span id="targetSellout"></span>
       </div>
     </div>
-  </section>
 
-
-  <!-- QUEUE -->
-  <section id="queueScreen" class="card hidden">
-    <span class="badge">WAITING QUEUE</span>
-
-    <div class="title">待機列</div>
-
-    <div class="subtitle">
-      発売開始直後のアクセスが集中しています。
+    <div class="warning">
+      ⚠️ ゲーム開始後、この画面は見られません。<br>
+      日付・座席・枚数を覚えてください。
     </div>
 
-    <div class="queue-number">
-      <span id="queuePosition">0</span>
+    <button class="full-btn" onclick="startGame()">
+      ゲームスタート
+    </button>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section id="countdownScreen" class="screen">
+  <div class="card center">
+    <h2>販売開始まで</h2>
+    <div id="countdownNumber" class="big-number">5.000</div>
+    <p>販売開始と同時にアクセスが集中します。</p>
+  </div>
+</section>
+
+<!-- RELEASE -->
+<section id="releaseScreen" class="screen">
+  <div class="card center">
+    <div class="congestion-icon">🚨</div>
+    <div class="congestion-title">アクセス集中</div>
+
+    <p class="congestion-text">
+      現在アクセスが集中しています。<br>
+      ページを再読み込みして接続してください。
+    </p>
+
+    <button class="danger-btn" onclick="firstReload()">
+      ページを再読み込み
+    </button>
+  </div>
+</section>
+
+<!-- CONGESTION -->
+<section id="congestionScreen" class="screen">
+  <div class="card center">
+    <div class="congestion-icon">🚨</div>
+
+    <div class="congestion-title">
+      サイトが混雑しています
     </div>
 
-    <div class="queue-label">
-      人待ち
+    <p id="congestionMessage" class="congestion-text"></p>
+
+    <button class="danger-btn" onclick="reloadCongestion()">
+      ページを再読み込み
+    </button>
+  </div>
+</section>
+
+<!-- QUEUE -->
+<section id="queueScreen" class="screen">
+  <div class="card">
+    <h2>🧍 待機列</h2>
+
+    <p class="small">
+      ページを更新せず、そのままお待ちください。
+    </p>
+
+    <div id="queueNumber" class="queue-number">
+      0人待ち
     </div>
 
-    <div class="progress">
-      <div id="queueProgress" class="progress-bar"></div>
+    <div class="queue-bar">
+      <div id="queueProgress" class="queue-progress"></div>
     </div>
 
-    <div class="center">
-      <span id="queueSpeed" class="fast"></span>
+    <p id="queueStatus" class="center">
+      接続しています……
+    </p>
+  </div>
+</section>
+
+<!-- DATE -->
+<section id="dateScreen" class="screen">
+  <div class="card">
+    <div class="stage-title">① 日程を選択</div>
+    <p class="small">覚えている今回の対象日程を選択してください。</p>
+
+    <div id="dateOptions" class="option-grid"></div>
+
+    <div id="dateNotice"></div>
+
+    <button id="dateNextBtn" class="full-btn" disabled onclick="selectDateNext()">
+      この日程を選択
+    </button>
+  </div>
+</section>
+
+<!-- SEAT -->
+<section id="seatScreen" class="screen">
+  <div class="card">
+    <div class="stage-title">② 座席を選択</div>
+    <p class="small">今回狙っていた座席を選択してください。</p>
+
+    <div id="seatOptions" class="option-grid"></div>
+
+    <div id="seatNotice"></div>
+
+    <button id="seatNextBtn" class="full-btn" disabled onclick="selectSeatNext()">
+      この座席を選択
+    </button>
+  </div>
+</section>
+
+<!-- QUANTITY -->
+<section id="quantityScreen" class="screen">
+  <div class="card">
+    <div class="stage-title">③ 枚数を選択</div>
+    <p class="small">今回狙っていた枚数を選択してください。</p>
+
+    <div id="quantityOptions" class="quantity-grid"></div>
+
+    <div id="quantityNotice"></div>
+
+    <button id="quantityNextBtn" class="full-btn" disabled onclick="selectQuantityNext()">
+      枚数を確定
+    </button>
+  </div>
+</section>
+
+<!-- CUSTOMER -->
+<section id="customerScreen" class="screen">
+  <div class="card">
+    <div class="stage-title">④ お客様情報</div>
+
+    <div class="info">
+      入力欄をタップするとゲーム用の情報が自動入力されます。
     </div>
 
-    <div class="notice">
-      順番にご案内しています。<br>
-      このゲームでは待機列を高速で進めています。
+    <div class="form-group">
+      <label>氏名</label>
+      <input
+        id="customerName"
+        class="auto-input"
+        readonly
+        placeholder="タップして入力"
+        onclick="autoFillCustomer()">
     </div>
-  </section>
 
+    <div class="form-group">
+      <label>メールアドレス</label>
+      <input
+        id="customerEmail"
+        class="auto-input"
+        readonly
+        placeholder="タップして入力"
+        onclick="autoFillCustomer()">
+    </div>
 
-  <!-- TARGET -->
-  <section id="targetScreen" class="hidden">
+    <div class="form-group">
+      <label>住所</label>
+      <input
+        id="customerAddress"
+        class="auto-input"
+        readonly
+        placeholder="タップして入力"
+        onclick="autoFillCustomer()">
+    </div>
+
+    <div id="customerNotice"></div>
+
+    <button class="full-btn" onclick="goToPayment()">
+      次へ
+    </button>
+  </div>
+</section>
+
+<!-- PAYMENT -->
+<section id="paymentScreen" class="screen">
+  <div class="card">
+    <div class="stage-title">⑤ 支払い情報</div>
+
+    <div class="warning">
+      ⚠️ これはゲーム内のダミー決済です。実際のお金は一切動きません。
+    </div>
+
+    <div class="form-group">
+      <label>カード番号</label>
+      <input
+        id="cardNumber"
+        class="auto-input"
+        readonly
+        placeholder="タップして自動入力"
+        onclick="autoFillCard()">
+    </div>
+
+    <div class="form-group">
+      <label>有効期限</label>
+      <input
+        id="cardExpiry"
+        class="auto-input"
+        readonly
+        placeholder="タップして自動入力"
+        onclick="autoFillCard()">
+    </div>
+
+    <div class="form-group">
+      <label>カード名義</label>
+      <input
+        id="cardName"
+        class="auto-input"
+        readonly
+        placeholder="タップして自動入力"
+        onclick="autoFillCard()">
+    </div>
+
+    <div class="form-group">
+      <label>セキュリティコード</label>
+
+      <div
+        id="securityWrap"
+        class="security-wrap"
+        data-code="">
+        <input
+          id="securityCode"
+          maxlength="3"
+          inputmode="numeric"
+          placeholder="3桁を入力">
+      </div>
+
+      <p class="small">
+        背景に表示されているゲーム内コードを入力してください。
+      </p>
+    </div>
+
+    <div id="paymentNotice"></div>
+
+    <button class="full-btn" onclick="goToConfirmation()">
+      確認画面へ
+    </button>
+  </div>
+</section>
+
+<!-- CONFIRMATION -->
+<section id="confirmScreen" class="screen">
+  <div class="card">
+    <div class="stage-title">⑥ 最終確認</div>
+
+    <div id="confirmSummary"></div>
+
+    <div class="check-list">
+
+      <label class="check-item">
+        <input type="checkbox" class="agreement">
+        <span>チケットの内容・日時・座席を確認しました</span>
+      </label>
+
+      <label class="check-item">
+        <input type="checkbox" class="agreement">
+        <span>チケット料金を確認しました</span>
+      </label>
+
+      <label class="check-item">
+        <input type="checkbox" class="agreement">
+        <span>利用規約に同意します</span>
+      </label>
+
+      <label class="check-item">
+        <input type="checkbox" class="agreement">
+        <span>キャンセル・変更に関する注意事項を確認しました</span>
+      </label>
+
+      <label class="check-item">
+        <input type="checkbox" class="agreement">
+        <span>入力した情報に間違いがないことを確認しました</span>
+      </label>
+
+    </div>
+
+    <button
+      id="purchaseBtn"
+      class="full-btn green-btn"
+      disabled
+      onclick="completePurchase()">
+      購入を確定する
+    </button>
+  </div>
+</section>
+
+<!-- RESULT -->
+<section id="resultScreen" class="screen">
+  <div class="card center">
+
+    <h1 id="resultTitle"></h1>
+
+    <p id="resultSubtitle"></p>
+
+    <div class="result-time">
+      <span id="resultTotalTime">0.000</span>秒
+    </div>
+
+    <div id="resultDetails"></div>
 
     <div class="card">
-      <span class="badge">STEP 1</span>
-      <div class="section-title">日程を選択</div>
-
-      <div id="dateOptions" class="option-grid"></div>
+      <div class="small">RANK</div>
+      <div id="resultRank" class="rank">--</div>
+      <p id="resultScore"></p>
     </div>
 
-    <div class="card">
-      <span class="badge">STEP 2</span>
-      <div class="section-title">座席種類を選択</div>
-
-      <div id="seatOptions" class="option-grid"></div>
-    </div>
-
-    <div class="card">
-      <span class="badge">STEP 3</span>
-      <div class="section-title">枚数を選択</div>
-
-      <div class="form-row">
-        <select id="quantity">
-          <option value="1">1枚</option>
-          <option value="2">2枚</option>
-          <option value="3">3枚</option>
-          <option value="4">4枚</option>
-        </select>
-      </div>
-
-      <button class="big-button blue-button" onclick="goToCustomer()">
-        この条件で購入へ
-      </button>
-    </div>
-
-  </section>
-
-
-  <!-- CUSTOMER -->
-  <section id="customerScreen" class="hidden">
-
-    <div class="card">
-      <span class="badge">STEP 4</span>
-      <div class="section-title">購入者情報</div>
-
-      <div class="notice">
-        ゲーム内で使用する架空の購入者情報です。
-        実際の個人情報やカード情報は入力しないでください。
-      </div>
-
-      <div class="form-row">
-        <label>氏名</label>
-        <input id="customerName" placeholder="ゲーム用の名前">
-      </div>
-
-      <div class="form-row">
-        <label>メールアドレス</label>
-        <input id="customerEmail" type="email"
-               placeholder="example@game.local">
-      </div>
-
-      <div class="form-row">
-        <label>住所</label>
-        <input id="customerAddress"
-               placeholder="ゲーム用住所">
-      </div>
-
-      <button class="big-button blue-button"
-              onclick="goToPayment()">
-        次へ：支払い方法
-      </button>
-    </div>
-
-  </section>
-
-
-  <!-- PAYMENT -->
-  <section id="paymentScreen" class="hidden">
-
-    <div class="card">
-      <span class="badge">STEP 5</span>
-      <div class="section-title">支払い方法</div>
-
-      <div class="notice warning">
-        ⚠️ ここは完全にゲーム用のダミー決済です。<br>
-        実際のクレジットカード番号・暗証番号・CVVなどは入力しないでください。
-      </div>
-
-      <div class="form-row">
-        <label>ゲーム用カード番号</label>
-        <input id="cardNumber"
-               inputmode="numeric"
-               maxlength="19"
-               placeholder="0000 0000 0000 0000">
-      </div>
-
-      <div class="form-grid">
-
-        <div class="form-row">
-          <label>有効期限（ゲーム用）</label>
-          <input id="cardExpiry"
-                 placeholder="12/30">
-        </div>
-
-        <div class="form-row">
-          <label>ゲーム認証コード（3桁）</label>
-          <input id="securityCode"
-                 inputmode="numeric"
-                 maxlength="3"
-                 placeholder="3桁を入力">
-        </div>
-
-      </div>
-
-      <div class="notice">
-        ゲーム認証コードは、このゲーム内だけで使用する
-        架空の3桁コードです。
-      </div>
-
-      <button class="big-button green-button"
-              onclick="completePurchase()">
-        購入を確定する
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- RESULT -->
-  <section id="resultScreen" class="hidden">
-
-    <div class="card">
-
-      <div class="result-main">
-        <div class="result-success">
-          🎉 購入成功！
-        </div>
-
-        <div class="subtitle">
-          チケットを確保しました！
-        </div>
-      </div>
-
-      <div class="result-ticket">
-
-        <div class="ticket-title">
-          TICKET BATTLE GAME
-        </div>
-
-        <div id="resultDate" class="ticket-name"></div>
-
-        <div id="resultSeat"></div>
-        <div id="resultQuantity"></div>
-
-      </div>
-
-      <div class="stats">
-
-        <div class="stat">
-          <div class="stat-label">総合タイム</div>
-          <div id="totalTime" class="stat-value"></div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">待機列</div>
-          <div id="queueTime" class="stat-value"></div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">座席選択</div>
-          <div id="seatTime" class="stat-value"></div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">入力・決済</div>
-          <div id="inputTime" class="stat-value"></div>
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- SCORE -->
-    <div class="card">
-
-      <span class="badge">PLAYER SCORE</span>
-
-      <div class="section-title">
-        個別能力スコア
-      </div>
-
-      <div class="score-row">
-        <div class="score-head">
-          <span>⚡ リロードの速さ</span>
-          <span id="reloadScoreText">0</span>
-        </div>
-        <div class="score-bg">
-          <div id="reloadScore" class="score-fill"></div>
-        </div>
-      </div>
-
-      <div class="score-row">
-        <div class="score-head">
-          <span>🎯 タップの正確さ</span>
-          <span id="accuracyScoreText">0</span>
-        </div>
-        <div class="score-bg">
-          <div id="accuracyScore" class="score-fill"></div>
-        </div>
-      </div>
-
-      <div class="score-row">
-        <div class="score-head">
-          <span>💺 座席選択の速さ</span>
-          <span id="seatScoreText">0</span>
-        </div>
-        <div class="score-bg">
-          <div id="seatScore" class="score-fill"></div>
-        </div>
-      </div>
-
-      <div class="score-row">
-        <div class="score-head">
-          <span>⌨️ 入力の速さ</span>
-          <span id="inputScoreText">0</span>
-        </div>
-        <div class="score-bg">
-          <div id="inputScore" class="score-fill"></div>
-        </div>
-      </div>
-
-      <div class="score-row">
-        <div class="score-head">
-          <span>🔥 混雑からの復帰</span>
-          <span id="queueScoreText">0</span>
-        </div>
-        <div class="score-bg">
-          <div id="queueScore" class="score-fill"></div>
-        </div>
-      </div>
-
-    </div>
-
-
-    <div class="card center">
-
-      <div class="small">
-        YOUR RANK
-      </div>
-
-      <div id="rank" class="rank">
-        A
-      </div>
-
-      <div id="points" class="subtitle"></div>
-
-      <button class="big-button blue-button"
-              onclick="location.reload()">
-        もう一度挑戦する
-      </button>
-
-    </div>
-
-  </section>
-
-</main>
-
+    <button class="full-btn dark-btn" onclick="location.reload()">
+      もう一度挑戦する
+    </button>
+  </div>
+</section>
 
 <script>
 
-/* ==============================
-   ゲームデータ
-============================== */
+/* =========================
+   データ
+========================= */
 
 const dates = [
   {
-    name: "9月20日（日）",
-    opponent: "架空チームA",
+    date: "9月20日（日）",
+    team: "架空チームA",
     popularity: 5
   },
   {
-    name: "9月21日（月・祝）",
-    opponent: "架空チームB",
+    date: "9月21日（月・祝）",
+    team: "架空チームB",
     popularity: 5
   },
   {
-    name: "9月27日（日）",
-    opponent: "架空チームC",
+    date: "9月27日（日）",
+    team: "架空チームC",
     popularity: 4
   },
   {
-    name: "9月28日（月）",
-    opponent: "架空チームD",
+    date: "9月28日（月）",
+    team: "架空チームD",
     popularity: 3
   },
   {
-    name: "10月4日（日）",
-    opponent: "架空チームE",
+    date: "10月4日（日）",
+    team: "架空チームE",
     popularity: 2
   },
   {
-    name: "10月5日（月）",
-    opponent: "架空チームF",
+    date: "10月5日（月）",
+    team: "架空チームF",
     popularity: 2
   }
 ];
-
 
 const seats = [
   {
     name: "ネット裏",
+    side: "",
     difficulty: 6,
-    stock: 320
+    stock: 320,
+    price: 8500
   },
   {
-    name: "グリーンシート 1塁側",
+    name: "グリーンシート",
+    side: "1塁側",
     difficulty: 4,
-    stock: 1500
+    stock: 1500,
+    price: 6500
   },
   {
-    name: "グリーンシート 3塁側",
+    name: "グリーンシート",
+    side: "3塁側",
     difficulty: 4,
-    stock: 1500
+    stock: 1500,
+    price: 6500
   },
   {
     name: "1塁アルプス",
+    side: "",
     difficulty: 3,
-    stock: 3000
+    stock: 3000,
+    price: 4200
   },
   {
     name: "3塁アルプス",
+    side: "",
     difficulty: 3,
-    stock: 3000
+    stock: 3000,
+    price: 4200
   },
   {
     name: "ライト外野",
+    side: "",
     difficulty: 5,
-    stock: 1800
+    stock: 1800,
+    price: 3200
   },
   {
     name: "レフト外野",
+    side: "",
     difficulty: 2,
-    stock: 3500
+    stock: 3500,
+    price: 3200
   }
 ];
 
+const difficultyNames = [
+  "普通",
+  "人気",
+  "超人気",
+  "激人気",
+  "最難関"
+];
 
-/* ==============================
-   状態
-============================== */
+const sellOutTimes = [
+  60,
+  47,
+  37,
+  30,
+  25
+];
+
+const congestionBaseChance = {
+  queue: 0.25,
+  date: 0.30,
+  seat: 0.40,
+  quantity: 0.35,
+  payment: 0.45
+};
+
+const retryChances = [
+  0.80,
+  0.60,
+  0.40,
+  0.20,
+  0.00
+];
+
+
+/* =========================
+   ゲーム状態
+========================= */
+
+let target = null;
 
 let gameStartTime = 0;
 let releaseTime = 0;
-let reloadTime = 0;
-
-let selectedDate = null;
-let selectedSeat = null;
-let selectedQuantity = 1;
 
 let queueStartTime = 0;
 let queueEndTime = 0;
-let targetStartTime = 0;
-let customerStartTime = 0;
+
+let inputStartTime = 0;
+
+let selectedDateIndex = null;
+let selectedSeatIndex = null;
+let selectedQuantity = null;
+
+let currentCongestionStage = null;
+let congestionContinueFunction = null;
+
+let congestionCounts = {
+  queue: 0,
+  date: 0,
+  seat: 0,
+  quantity: 0,
+  payment: 0
+};
 
 let authCode = "";
-let seatSelectionTime = 0;
-let inputTime = 0;
+
+let countdownAnimation = null;
+let queueAnimation = null;
 
 
-/* ==============================
-   画面切り替え
-============================== */
+/* =========================
+   画面操作
+========================= */
 
-function hideAll() {
+function showScreen(id) {
 
-  const screens = [
-    "startScreen",
-    "countdownScreen",
-    "releaseScreen",
-    "queueScreen",
-    "targetScreen",
-    "customerScreen",
-    "paymentScreen",
-    "resultScreen"
-  ];
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
+  });
 
-  screens.forEach(id => {
-    document.getElementById(id).classList.add("hidden");
+  document.getElementById(id).classList.add("active");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "instant"
   });
 }
 
 
-/* ==============================
+/* =========================
+   ランダム
+========================= */
+
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+/* =========================
+   ゲーム準備
+========================= */
+
+function prepareGame() {
+
+  selectedDateIndex = randomInt(0, dates.length - 1);
+  selectedSeatIndex = randomInt(0, seats.length - 1);
+  selectedQuantity = randomInt(1, 4);
+
+  const difficultyTier = randomInt(1, 5);
+
+  const date = dates[selectedDateIndex];
+  const seat = seats[selectedSeatIndex];
+
+  target = {
+    dateIndex: selectedDateIndex,
+    seatIndex: selectedSeatIndex,
+    quantity: selectedQuantity,
+    difficulty: difficultyTier,
+    difficultyName: difficultyNames[difficultyTier - 1],
+    sellOutSeconds: sellOutTimes[difficultyTier - 1],
+    price: seat.price * selectedQuantity
+  };
+
+  document.getElementById("targetMain").textContent =
+    `${date.team} 戦`;
+
+  document.getElementById("targetDate").textContent =
+    date.date;
+
+  document.getElementById("targetSeat").textContent =
+    `${seat.name}${seat.side ? " " + seat.side : ""}`;
+
+  document.getElementById("targetQuantity").textContent =
+    `${selectedQuantity}枚`;
+
+  const difficultyElement =
+    document.getElementById("targetDifficulty");
+
+  difficultyElement.textContent =
+    target.difficultyName;
+
+  difficultyElement.className =
+    `difficulty difficulty-${difficultyTier}`;
+
+  document.getElementById("targetPrice").textContent =
+    `${target.price.toLocaleString()}円`;
+
+  document.getElementById("targetSellout").textContent =
+    `${target.sellOutSeconds}秒`;
+
+  showScreen("targetScreen");
+}
+
+
+/* =========================
    ゲーム開始
-============================== */
+========================= */
 
 function startGame() {
 
-  localStorage.removeItem("ticketBattle");
+  if (!target) {
+    prepareGame();
+    return;
+  }
 
   gameStartTime = performance.now();
 
-  hideAll();
+  selectedDateIndex = null;
+  selectedSeatIndex = null;
+  selectedQuantity = null;
 
-  document
-    .getElementById("countdownScreen")
-    .classList.remove("hidden");
+  congestionCounts = {
+    queue: 0,
+    date: 0,
+    seat: 0,
+    quantity: 0,
+    payment: 0
+  };
+
+  showScreen("countdownScreen");
 
   startCountdown();
 }
 
 
-/* ==============================
-   カウントダウン
-============================== */
+/* =========================
+   高精度カウントダウン
+========================= */
 
 function startCountdown() {
 
-  let count = 5;
+  const countdownStart = performance.now();
+  const duration = 5000;
 
-  const number =
-    document.getElementById("countdownNumber");
+  function tick(now) {
 
-  const message =
-    document.getElementById("countdownMessage");
+    const elapsed = now - countdownStart;
+    const remaining = Math.max(0, duration - elapsed);
 
-  number.textContent = count;
+    document.getElementById("countdownNumber")
+      .textContent = (remaining / 1000).toFixed(3);
 
-  const timer = setInterval(() => {
+    if (remaining > 0) {
 
-    count--;
-
-    if (count > 0) {
-
-      number.textContent = count;
+      countdownAnimation =
+        requestAnimationFrame(tick);
 
     } else {
 
-      clearInterval(timer);
+      releaseTime = performance.now();
 
-      number.textContent = "🎫";
-
-      message.textContent =
-        "チケット発売開始！";
-
-      releaseTime = Date.now();
-
-      localStorage.setItem(
-        "ticketBattle",
-        JSON.stringify({
-          releaseTime: releaseTime
-        })
-      );
-
-      setTimeout(() => {
-
-        hideAll();
-
-        document
-          .getElementById("releaseScreen")
-          .classList.remove("hidden");
-
-      }, 500);
-
+      showScreen("releaseScreen");
     }
-
-  }, 1000);
-}
-
-
-/* ==============================
-   手動リロード
-============================== */
-
-function manualReload() {
-
-  const data =
-    JSON.parse(
-      localStorage.getItem("ticketBattle") || "{}"
-    );
-
-  if (!data.releaseTime) {
-
-    alert("まだ発売開始していません。");
-
-    return;
   }
 
-  reloadTime = Date.now();
-
-  const difference =
-    Math.max(
-      0,
-      reloadTime - data.releaseTime
-    );
-
-  startQueue(difference);
+  requestAnimationFrame(tick);
 }
 
 
-/* ==============================
+/* =========================
+   最初のリロード
+========================= */
+
+function firstReload() {
+
+  const reactionTime =
+    performance.now() - releaseTime;
+
+  startQueue(reactionTime);
+}
+
+
+/* =========================
    待機列
-============================== */
+========================= */
 
-function startQueue(difference) {
-
-  hideAll();
-
-  document
-    .getElementById("queueScreen")
-    .classList.remove("hidden");
+function startQueue(reactionTime) {
 
   queueStartTime = performance.now();
 
-  let initialPosition;
-
   /*
-    0.005秒単位を意識したゲーム判定
+    反応が速いほど前方になる
   */
 
-  if (difference <= 5) {
+  let queuePosition;
 
-    initialPosition =
-      randomInt(100, 500);
-
-  } else if (difference <= 10) {
-
-    initialPosition =
-      randomInt(500, 2000);
-
-  } else if (difference <= 50) {
-
-    initialPosition =
-      randomInt(2000, 10000);
-
-  } else if (difference <= 100) {
-
-    initialPosition =
-      randomInt(10000, 30000);
-
-  } else if (difference <= 500) {
-
-    initialPosition =
-      randomInt(30000, 100000);
-
+  if (reactionTime < 300) {
+    queuePosition = randomInt(100, 3000);
+  } else if (reactionTime < 700) {
+    queuePosition = randomInt(2000, 9000);
+  } else if (reactionTime < 1200) {
+    queuePosition = randomInt(7000, 18000);
+  } else if (reactionTime < 2000) {
+    queuePosition = randomInt(15000, 30000);
   } else {
-
-    initialPosition =
-      randomInt(100000, 500000);
-
+    queuePosition = randomInt(25000, 50000);
   }
 
-
-  let position = initialPosition;
-
-  document.getElementById("queuePosition")
-    .textContent =
-    position.toLocaleString();
-
-
-  const total =
-    initialPosition;
-
-  /*
-    待機時間は約5～20秒
-  */
-
   const queueDuration =
-    Math.min(
-      20000,
-      Math.max(
-        5000,
-        5000 + total / 35
-      )
-    );
+    Math.min(18000, 5000 + queuePosition / 4);
 
+  queueEndTime =
+    queueStartTime + queueDuration;
+
+  document.getElementById("queueNumber")
+    .textContent =
+    `${queuePosition.toLocaleString()}人待ち`;
+
+  showScreen("queueScreen");
+
+  maybeCongestion(
+    "queue",
+    () => runQueue(queuePosition)
+  );
+}
+
+
+/* =========================
+   待機列進行
+========================= */
+
+function runQueue(initialPosition) {
 
   const start = performance.now();
 
-  const interval =
-    setInterval(() => {
+  function tick(now) {
 
-      const elapsed =
-        performance.now() - start;
+    const elapsed = now - start;
+    const duration = queueEndTime - queueStartTime;
 
-      const progress =
-        Math.min(
-          1,
-          elapsed / queueDuration
-        );
+    const progress =
+      Math.min(1, elapsed / duration);
 
-      /*
-        前半は速く、後半も一気に進む
-      */
+    const currentPosition =
+      Math.max(
+        0,
+        Math.floor(initialPosition * (1 - progress))
+      );
 
-      const eased =
-        1 - Math.pow(1 - progress, 2);
+    document.getElementById("queueNumber")
+      .textContent =
+      `${currentPosition.toLocaleString()}人待ち`;
 
-      position =
-        Math.max(
-          0,
-          Math.floor(
-            total * (1 - eased)
-          )
-        );
+    document.getElementById("queueProgress")
+      .style.width =
+      `${progress * 100}%`;
 
-      document.getElementById("queuePosition")
-        .textContent =
-        position.toLocaleString();
+    document.getElementById("queueStatus")
+      .textContent =
+      progress >= 1
+        ? "順番が来ました！"
+        : "順番を待っています……";
 
-      document.getElementById("queueProgress")
-        .style.width =
-        (progress * 100) + "%";
+    if (progress < 1) {
 
-      document.getElementById("queueSpeed")
-        .textContent =
-        "高速で順番が進んでいます…";
+      queueAnimation =
+        requestAnimationFrame(tick);
 
-      if (progress >= 1) {
+    } else {
 
-        clearInterval(interval);
+      setTimeout(() => {
+        enterDateStage();
+      }, 500);
+    }
+  }
 
-        queueEndTime =
-          performance.now();
-
-        document.getElementById("queuePosition")
-          .textContent = "0";
-
-        document.getElementById("queueProgress")
-          .style.width = "100%";
-
-        document.getElementById("queueSpeed")
-          .textContent =
-          "✓ 待機列を突破しました！";
-
-        setTimeout(() => {
-
-          showTargets();
-
-        }, 700);
-
-      }
-
-    }, 100);
-
+  requestAnimationFrame(tick);
 }
 
 
-/* ==============================
-   日程・座席
-============================== */
+/* =========================
+   混雑処理
+========================= */
 
-function showTargets() {
+function maybeCongestion(stage, continueFunction) {
 
-  hideAll();
+  const count = congestionCounts[stage];
 
-  document
-    .getElementById("targetScreen")
-    .classList.remove("hidden");
+  /*
+    初回はステージごとの基本確率
+  */
 
-  targetStartTime =
-    performance.now();
+  let chance;
 
-  renderDates();
-  renderSeats();
+  if (count === 0) {
+
+    chance = congestionBaseChance[stage];
+
+  } else {
+
+    /*
+      1回目の混雑後 → 80%
+      2回目 → 60%
+      3回目 → 40%
+      4回目 → 20%
+      5回目 → 0%
+    */
+
+    chance =
+      retryChances[count - 1] ?? 0;
+  }
+
+  if (Math.random() < chance) {
+
+    congestionCounts[stage]++;
+
+    currentCongestionStage = stage;
+    congestionContinueFunction =
+      continueFunction;
+
+    showCongestion(stage);
+
+  } else {
+
+    continueFunction();
+  }
 }
 
 
-function renderDates() {
+/* =========================
+   混雑画面
+========================= */
+
+function showCongestion(stage) {
+
+  const messages = {
+
+    queue:
+      "現在、待機列へのアクセスが集中しています。<br>ページを再読み込みして接続してください。",
+
+    date:
+      "日程選択ページへのアクセスが集中しています。<br>ページを再読み込みしてください。",
+
+    seat:
+      "座席選択ページへのアクセスが集中しています。<br>ページを再読み込みしてください。",
+
+    quantity:
+      "枚数選択ページへのアクセスが集中しています。<br>ページを再読み込みしてください。",
+
+    payment:
+      "決済ページへのアクセスが集中しています。<br>ページを再読み込みしてください。"
+  };
+
+  document.getElementById("congestionMessage")
+    .innerHTML =
+    messages[stage];
+
+  showScreen("congestionScreen");
+}
+
+
+function reloadCongestion() {
+
+  const stage =
+    currentCongestionStage;
+
+  const continueFunction =
+    congestionContinueFunction;
+
+  currentCongestionStage = null;
+  congestionContinueFunction = null;
+
+  /*
+    疑似リロード。
+    本物の location.reload() は使わない。
+  */
+
+  setTimeout(() => {
+
+    if (continueFunction) {
+      continueFunction();
+    }
+
+  }, randomInt(250, 700));
+}
+
+
+/* =========================
+   日付選択
+========================= */
+
+function enterDateStage() {
+
+  showScreen("dateScreen");
 
   const container =
     document.getElementById("dateOptions");
 
   container.innerHTML = "";
 
-  dates.forEach((date, index) => {
+  document.getElementById("dateNextBtn")
+    .disabled = true;
+
+  selectedDateIndex = null;
+
+  dates.forEach((item, index) => {
 
     const button =
       document.createElement("button");
 
-    button.className = "option";
+    button.className = "option-btn";
 
     button.innerHTML = `
-      <div class="option-name">
-        ${date.name}
+      <div class="option-title">
+        ${item.date}
       </div>
-
-      <div class="option-info">
-        ${date.opponent}
-      </div>
-
-      <div class="difficulty">
-        人気度：
-        ${"★".repeat(date.popularity)}
-        ${"☆".repeat(5 - date.popularity)}
+      <div class="option-sub">
+        ${item.team} ・ 人気度 ${item.popularity}/5
       </div>
     `;
 
     button.onclick = () => {
 
-      selectedDate = index;
+      selectedDateIndex = index;
 
       document
-        .querySelectorAll("#dateOptions .option")
-        .forEach(el =>
-          el.classList.remove("selected")
+        .querySelectorAll("#dateOptions .option-btn")
+        .forEach(btn =>
+          btn.classList.remove("selected")
         );
 
       button.classList.add("selected");
+
+      document.getElementById("dateNextBtn")
+        .disabled = false;
     };
 
     container.appendChild(button);
-
   });
+
+  maybeCongestion(
+    "date",
+    () => {}
+  );
 }
 
 
-function renderSeats() {
+function selectDateNext() {
+
+  if (selectedDateIndex === null) {
+    return;
+  }
+
+  const correct =
+    selectedDateIndex === target.dateIndex;
+
+  if (!correct) {
+
+    document.getElementById("dateNotice")
+      .innerHTML = `
+        <div class="warning">
+          ❌ 今回狙っている日程とは違います。<br>
+          もう一度選択してください。
+        </div>
+      `;
+
+    return;
+  }
+
+  document.getElementById("dateNotice")
+    .innerHTML = "";
+
+  enterSeatStage();
+}
+
+
+/* =========================
+   座席選択
+========================= */
+
+function enterSeatStage() {
+
+  showScreen("seatScreen");
 
   const container =
     document.getElementById("seatOptions");
 
   container.innerHTML = "";
 
+  selectedSeatIndex = null;
+
+  document.getElementById("seatNextBtn")
+    .disabled = true;
+
   seats.forEach((seat, index) => {
 
     const button =
       document.createElement("button");
 
-    button.className = "option";
+    button.className = "option-btn";
 
     button.innerHTML = `
-      <div class="option-name">
-        ${seat.name}
+      <div class="option-title">
+        ${seat.name}${seat.side ? " " + seat.side : ""}
       </div>
-
-      <div class="option-info">
-        架空販売席数：約${seat.stock.toLocaleString()}席
-      </div>
-
-      <div class="difficulty">
-        難易度：
-        <span class="fire">
-          ${"🔥".repeat(seat.difficulty)}
-        </span>
+      <div class="option-sub">
+        ${seat.price.toLocaleString()}円 / 1枚
       </div>
     `;
 
     button.onclick = () => {
 
-      selectedSeat = index;
+      selectedSeatIndex = index;
 
       document
-        .querySelectorAll("#seatOptions .option")
-        .forEach(el =>
-          el.classList.remove("selected")
+        .querySelectorAll("#seatOptions .option-btn")
+        .forEach(btn =>
+          btn.classList.remove("selected")
         );
 
       button.classList.add("selected");
+
+      document.getElementById("seatNextBtn")
+        .disabled = false;
     };
 
     container.appendChild(button);
-
   });
+
+  maybeCongestion(
+    "seat",
+    () => {}
+  );
 }
 
 
-/* ==============================
-   購入者情報
-============================== */
+function selectSeatNext() {
 
-function goToCustomer() {
+  if (selectedSeatIndex === null) {
+    return;
+  }
 
-  if (
-    selectedDate === null ||
-    selectedSeat === null
-  ) {
+  const correct =
+    selectedSeatIndex === target.seatIndex;
 
-    alert(
-      "日程と座席種類を選択してください。"
-    );
+  if (!correct) {
+
+    document.getElementById("seatNotice")
+      .innerHTML = `
+        <div class="warning">
+          ❌ 今回狙っている座席とは違います。<br>
+          もう一度選択してください。
+        </div>
+      `;
 
     return;
   }
 
-  selectedQuantity =
-    Number(
-      document.getElementById("quantity").value
-    );
+  document.getElementById("seatNotice")
+    .innerHTML = "";
 
-  seatSelectionTime =
-    performance.now() - targetStartTime;
+  enterQuantityStage();
+}
 
-  customerStartTime =
-    performance.now();
 
-  hideAll();
+/* =========================
+   枚数選択
+========================= */
 
-  document
-    .getElementById("customerScreen")
-    .classList.remove("hidden");
+function enterQuantityStage() {
 
-  /*
-    ゲーム用の入力値だけ保存
-  */
+  showScreen("quantityScreen");
 
-  document.getElementById("customerName").value =
-    localStorage.getItem("gameName") || "";
+  const container =
+    document.getElementById("quantityOptions");
 
-  document.getElementById("customerEmail").value =
-    localStorage.getItem("gameEmail") || "";
+  container.innerHTML = "";
 
-  document.getElementById("customerAddress").value =
-    localStorage.getItem("gameAddress") || "";
+  selectedQuantity = null;
+
+  document.getElementById("quantityNextBtn")
+    .disabled = true;
+
+  for (let i = 1; i <= 4; i++) {
+
+    const button =
+      document.createElement("button");
+
+    button.className = "quantity-btn";
+    button.textContent = `${i}枚`;
+
+    button.onclick = () => {
+
+      selectedQuantity = i;
+
+      document
+        .querySelectorAll("#quantityOptions .quantity-btn")
+        .forEach(btn =>
+          btn.classList.remove("selected")
+        );
+
+      button.classList.add("selected");
+
+      document.getElementById("quantityNextBtn")
+        .disabled = false;
+    };
+
+    container.appendChild(button);
+  }
+
+  maybeCongestion(
+    "quantity",
+    () => {}
+  );
+}
+
+
+function selectQuantityNext() {
+
+  if (selectedQuantity === null) {
+    return;
+  }
+
+  const correct =
+    selectedQuantity === target.quantity;
+
+  if (!correct) {
+
+    document.getElementById("quantityNotice")
+      .innerHTML = `
+        <div class="warning">
+          ❌ 今回狙っている枚数とは違います。<br>
+          もう一度選択してください。
+        </div>
+      `;
+
+    return;
+  }
+
+  document.getElementById("quantityNotice")
+    .innerHTML = "";
+
+  inputStartTime = performance.now();
+
+  showScreen("customerScreen");
+}
+
+
+/* =========================
+   顧客情報
+========================= */
+
+function autoFillCustomer() {
+
+  document.getElementById("customerName")
+    .value = "田中ゆうう";
+
+  document.getElementById("customerEmail")
+    .value = "yuuu@yuu.com";
+
+  document.getElementById("customerAddress")
+    .value = "ゆうう市ゆうう町";
 }
 
 
 function goToPayment() {
 
   const name =
-    document.getElementById("customerName").value.trim();
+    document.getElementById("customerName").value;
 
   const email =
-    document.getElementById("customerEmail").value.trim();
+    document.getElementById("customerEmail").value;
 
   const address =
-    document.getElementById("customerAddress").value.trim();
-
+    document.getElementById("customerAddress").value;
 
   if (!name || !email || !address) {
 
-    alert(
-      "ゲーム用の購入者情報をすべて入力してください。"
-    );
+    document.getElementById("customerNotice")
+      .innerHTML = `
+        <div class="warning">
+          ⚠️ 3つすべての入力欄をタップしてください。
+        </div>
+      `;
 
     return;
   }
 
-
-  /*
-    ゲーム用情報だけ保存
-  */
-
-  localStorage.setItem(
-    "gameName",
-    name
-  );
-
-  localStorage.setItem(
-    "gameEmail",
-    email
-  );
-
-  localStorage.setItem(
-    "gameAddress",
-    address
-  );
-
-
-  inputTime =
-    performance.now() - customerStartTime;
-
-
-  /*
-    架空の3桁ゲーム認証コード
-  */
+  document.getElementById("customerNotice")
+    .innerHTML = "";
 
   authCode =
-    String(
-      randomInt(100, 999)
-    );
+    randomInt(100, 999).toString();
 
+  document.getElementById("securityWrap")
+    .dataset.code = authCode;
 
-  console.log(
-    "ゲーム認証コード:",
-    authCode
+  document.getElementById("securityCode")
+    .value = "";
+
+  showScreen("paymentScreen");
+
+  maybeCongestion(
+    "payment",
+    () => {}
   );
-
-
-  hideAll();
-
-  document
-    .getElementById("paymentScreen")
-    .classList.remove("hidden");
 }
 
 
-/* ==============================
-   購入確定
-============================== */
+/* =========================
+   カード情報
+========================= */
+
+function autoFillCard() {
+
+  document.getElementById("cardNumber")
+    .value = "4242 4242 4242 4242";
+
+  document.getElementById("cardExpiry")
+    .value = "12/30";
+
+  document.getElementById("cardName")
+    .value = "TANAKA YUU";
+}
+
+
+function goToConfirmation() {
+
+  const cardNumber =
+    document.getElementById("cardNumber").value;
+
+  const expiry =
+    document.getElementById("cardExpiry").value;
+
+  const cardName =
+    document.getElementById("cardName").value;
+
+  const security =
+    document.getElementById("securityCode").value;
+
+  if (!cardNumber || !expiry || !cardName) {
+
+    document.getElementById("paymentNotice")
+      .innerHTML = `
+        <div class="warning">
+          ⚠️ カード情報の入力欄をタップしてください。
+        </div>
+      `;
+
+    return;
+  }
+
+  if (security !== authCode) {
+
+    document.getElementById("paymentNotice")
+      .innerHTML = `
+        <div class="warning">
+          ❌ セキュリティコードが違います。
+        </div>
+      `;
+
+    return;
+  }
+
+  document.getElementById("paymentNotice")
+    .innerHTML = "";
+
+  createConfirmation();
+
+  showScreen("confirmScreen");
+}
+
+
+/* =========================
+   確認画面
+========================= */
+
+function createConfirmation() {
+
+  const date =
+    dates[target.dateIndex];
+
+  const seat =
+    seats[target.seatIndex];
+
+  document.getElementById("confirmSummary")
+    .innerHTML = `
+      <div class="info">
+        <strong>${date.team}</strong><br>
+        ${date.date}<br>
+        ${seat.name}${seat.side ? " " + seat.side : ""}<br>
+        ${target.quantity}枚<br>
+        合計 ${target.price.toLocaleString()}円
+      </div>
+    `;
+
+  document
+    .querySelectorAll(".agreement")
+    .forEach(check => {
+      check.checked = false;
+    });
+
+  updatePurchaseButton();
+}
+
+
+document
+  .querySelectorAll(".agreement")
+  .forEach(check => {
+
+    check.addEventListener("change", () => {
+      updatePurchaseButton();
+    });
+
+  });
+
+
+function updatePurchaseButton() {
+
+  const checks =
+    [...document.querySelectorAll(".agreement")];
+
+  const allChecked =
+    checks.length === 5 &&
+    checks.every(check => check.checked);
+
+  document.getElementById("purchaseBtn")
+    .disabled = !allChecked;
+}
+
+
+/* =========================
+   購入完了
+========================= */
 
 function completePurchase() {
 
-  const card =
-    document
-      .getElementById("cardNumber")
-      .value
-      .replace(/\s/g, "");
+  const checks =
+    [...document.querySelectorAll(".agreement")];
 
-  const expiry =
-    document
-      .getElementById("cardExpiry")
-      .value.trim();
-
-  const security =
-    document
-      .getElementById("securityCode")
-      .value.trim();
-
-
-  /*
-    完全にゲーム用のダミー入力
-  */
-
-  if (
-    card !== "0000000000000000"
-  ) {
-
-    alert(
-      "ゲーム用カード番号は「0000 0000 0000 0000」を入力してください。"
-    );
-
+  if (!checks.every(check => check.checked)) {
     return;
   }
-
-
-  if (!expiry) {
-
-    alert(
-      "ゲーム用の有効期限を入力してください。"
-    );
-
-    return;
-  }
-
-
-  if (!/^\d{3}$/.test(security)) {
-
-    alert(
-      "ゲーム認証コードは3桁の数字を入力してください。"
-    );
-
-    return;
-  }
-
-
-  /*
-    ゲームでは任意の3桁を受け付ける
-    実際のカード認証は行わない
-  */
 
   const totalTime =
     (performance.now() - gameStartTime) / 1000;
 
-  const queueSeconds =
-    (queueEndTime - queueStartTime) / 1000;
+  const sellOut =
+    target.sellOutSeconds;
 
-  const seatSeconds =
-    seatSelectionTime / 1000;
-
-  const inputSeconds =
-    inputTime / 1000;
-
+  const success =
+    totalTime <= sellOut;
 
   showResult(
+    success,
     totalTime,
-    queueSeconds,
-    seatSeconds,
-    inputSeconds
+    sellOut
   );
 }
 
 
-/* ==============================
+/* =========================
    結果
-============================== */
+========================= */
 
-function showResult(
-  totalTime,
-  queueSeconds,
-  seatSeconds,
-  inputSeconds
-) {
+function showResult(success, totalTime, sellOut) {
 
-  hideAll();
+  const title =
+    document.getElementById("resultTitle");
 
-  document
-    .getElementById("resultScreen")
-    .classList.remove("hidden");
+  const subtitle =
+    document.getElementById("resultSubtitle");
 
+  const details =
+    document.getElementById("resultDetails");
 
-  const date =
-    dates[selectedDate];
+  const time =
+    document.getElementById("resultTotalTime");
 
-  const seat =
-    seats[selectedSeat];
+  time.textContent =
+    totalTime.toFixed(3);
 
+  if (success) {
 
-  document.getElementById("resultDate")
-    .textContent =
-    date.name;
+    title.textContent =
+      "🎉 購入成功！";
 
+    title.className =
+      "result-success";
 
-  document.getElementById("resultSeat")
-    .textContent =
-    seat.name;
+    const margin =
+      sellOut - totalTime;
 
+    subtitle.textContent =
+      "チケットを確保しました！";
 
-  document.getElementById("resultQuantity")
-    .textContent =
-    `${selectedQuantity}枚 / ${date.opponent}`;
+    details.innerHTML = `
+      <div class="info">
+        売り切れ時間：${sellOut.toFixed(3)}秒
+      </div>
 
+      <div class="result-time result-success">
+        ${margin.toFixed(3)}秒の余裕で購入できました！
+      </div>
+    `;
 
-  document.getElementById("totalTime")
-    .textContent =
-    totalTime.toFixed(2) + "秒";
-
-
-  document.getElementById("queueTime")
-    .textContent =
-    queueSeconds.toFixed(2) + "秒";
-
-
-  document.getElementById("seatTime")
-    .textContent =
-    seatSeconds.toFixed(2) + "秒";
-
-
-  document.getElementById("inputTime")
-    .textContent =
-    inputSeconds.toFixed(2) + "秒";
-
-
-  /*
-    スコア計算
-  */
-
-  const reloadDelay =
-    Math.max(
-      0,
-      reloadTime - releaseTime
-    );
-
-
-  let reloadScore;
-
-  if (reloadDelay <= 5) {
-    reloadScore = 100;
-  } else if (reloadDelay <= 10) {
-    reloadScore = 95;
-  } else if (reloadDelay <= 50) {
-    reloadScore = 85;
-  } else if (reloadDelay <= 100) {
-    reloadScore = 75;
-  } else if (reloadDelay <= 500) {
-    reloadScore = 60;
   } else {
-    reloadScore = 40;
+
+    title.textContent =
+      "❌ 売り切れ";
+
+    title.className =
+      "result-fail";
+
+    const late =
+      totalTime - sellOut;
+
+    subtitle.textContent =
+      "あと少し早ければ購入できました……";
+
+    details.innerHTML = `
+      <div class="warning">
+        売り切れ時間：${sellOut.toFixed(3)}秒
+      </div>
+
+      <div class="result-time result-fail">
+        あと${late.toFixed(3)}秒早ければ購入できました。
+      </div>
+    `;
   }
 
+  calculateScore(totalTime, success);
+
+  showScreen("resultScreen");
+}
+
+
+/* =========================
+   スコア
+========================= */
+
+function calculateScore(totalTime, success) {
+
+  let score = 0;
 
   /*
-    座席選択
+    スピード
   */
 
-  let seatScore =
+  const speedScore =
     Math.max(
-      40,
-      Math.min(
-        100,
-        110 - seatSeconds * 12
-      )
+      0,
+      1000 - Math.floor(totalTime * 10)
     );
 
+  score += speedScore;
 
   /*
-    入力
+    対象チケット正確性
   */
 
-  let inputScore =
-    Math.max(
-      40,
-      Math.min(
-        100,
-        105 - inputSeconds * 10
-      )
-    );
+  const accuracy =
+    selectedDateIndex === target.dateIndex &&
+    selectedSeatIndex === target.seatIndex &&
+    selectedQuantity === target.quantity;
 
+  if (accuracy) {
+    score += 500;
+  }
 
   /*
-    混雑突破
+    購入成功ボーナス
   */
 
-  let queueScore =
-    Math.max(
-      50,
-      Math.min(
-        100,
-        100 - queueSeconds * 1.5
-      )
-    );
-
+  if (success) {
+    score += 1000;
+  }
 
   /*
-    タップ正確さ
+    難易度ボーナス
   */
 
-  let accuracyScore =
-    Math.max(
-      60,
-      Math.min(
-        100,
-        100 - seat.difficulty * 2 + randomInt(-3, 3)
-      )
-    );
-
-
-  setScore(
-    "reloadScore",
-    "reloadScoreText",
-    reloadScore
-  );
-
-  setScore(
-    "accuracyScore",
-    "accuracyScoreText",
-    accuracyScore
-  );
-
-  setScore(
-    "seatScore",
-    "seatScoreText",
-    Math.round(seatScore)
-  );
-
-  setScore(
-    "inputScore",
-    "inputScoreText",
-    Math.round(inputScore)
-  );
-
-  setScore(
-    "queueScore",
-    "queueScoreText",
-    Math.round(queueScore)
-  );
-
-
-  /*
-    総合ポイント
-  */
-
-  const totalScore =
-    Math.round(
-      (
-        reloadScore +
-        accuracyScore +
-        seatScore +
-        inputScore +
-        queueScore
-      ) / 5
-    );
-
+  score += target.difficulty * 100;
 
   let rank;
 
-  if (totalScore >= 95) {
-    rank = "SSS";
-  } else if (totalScore >= 90) {
-    rank = "SS";
-  } else if (totalScore >= 82) {
+  if (score >= 2400) {
     rank = "S";
-  } else if (totalScore >= 75) {
+  } else if (score >= 2000) {
     rank = "A";
-  } else if (totalScore >= 65) {
+  } else if (score >= 1600) {
     rank = "B";
-  } else if (totalScore >= 50) {
+  } else if (score >= 1200) {
     rank = "C";
-  } else {
+  } else if (score >= 800) {
     rank = "D";
+  } else {
+    rank = "E";
   }
 
+  document.getElementById("resultRank")
+    .textContent = rank;
 
-  document.getElementById("rank")
+  document.getElementById("resultScore")
     .textContent =
-    rank;
-
-
-  document.getElementById("points")
-    .textContent =
-    `総合スコア ${totalScore} / 100　・　${totalScore * 10} POINTS`;
-}
-
-
-/* ==============================
-   スコア表示
-============================== */
-
-function setScore(
-  barId,
-  textId,
-  score
-) {
-
-  score =
-    Math.round(
-      Math.max(
-        0,
-        Math.min(
-          100,
-          score
-        )
-      )
-    );
-
-  document.getElementById(barId)
-    .style.width =
-    score + "%";
-
-  document.getElementById(textId)
-    .textContent =
-    score;
-}
-
-
-/* ==============================
-   ランダム数字
-============================== */
-
-function randomInt(min, max) {
-
-  return Math.floor(
-    Math.random() *
-    (max - min + 1)
-  ) + min;
+    `スコア：${score.toLocaleString()}点`;
 }
 
 </script>
