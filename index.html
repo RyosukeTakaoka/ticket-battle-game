@@ -1712,6 +1712,19 @@ input:focus {
 
     </button>
 
+    <div
+      id="purchaseLoading"
+      class="loading">
+
+      <div class="spinner"></div>
+
+      <span>
+        購入処理中……
+        他のお客様と競合していないか確認しています
+      </span>
+
+    </div>
+
   </div>
 
 </section>
@@ -2112,7 +2125,7 @@ let queueTimeSavedByMash = 0;
   結果・シェア用
 */
 
-let lastResultSuccess = null;
+let lastResultOutcome = null;
 
 
 /* =====================================================
@@ -3755,14 +3768,145 @@ function purchase() {
     ) / 1000;
 
 
-  const success =
-    totalTime <=
-    target.sellOut;
+  const button =
+    document
+      .getElementById(
+        "purchaseButton"
+      );
 
 
-  showResult(
-    success,
-    totalTime
+  button.disabled = true;
+
+  button.textContent =
+    "購入処理中…";
+
+
+  document
+    .getElementById(
+      "purchaseLoading"
+    )
+    .classList.add("show");
+
+
+  /*
+    他のお客様と購入が
+    競合していないか
+    確認している演出
+  */
+
+  setTimeout(() => {
+
+    const outcome =
+      determineOutcome(
+        totalTime
+      );
+
+
+    showResult(
+      outcome,
+      totalTime
+    );
+
+  },random(700,1500));
+
+}
+
+
+/* =====================================================
+   買い負け判定
+
+   時間内に購入できても、
+   人気チケットは早い者勝ち。
+   ギリギリの購入ほど、
+   他のお客様に買い負ける
+   可能性が上がります
+===================================================== */
+
+function determineOutcome(totalTime) {
+
+  if(totalTime > target.sellOut) {
+
+    return "soldOut";
+
+  }
+
+
+  const margin =
+    target.sellOut - totalTime;
+
+
+  const raceLossChance =
+    calculateRaceLossChance(
+      margin
+    );
+
+
+  if(Math.random() < raceLossChance) {
+
+    return "raceLoss";
+
+  }
+
+
+  return "success";
+
+}
+
+
+function calculateRaceLossChance(margin) {
+
+
+  /*
+    難易度が高いほど
+    競合が多い
+  */
+
+  const difficultyFactor =
+    target.difficulty * 0.04;
+
+
+  /*
+    購入完了がギリギリなほど
+    買い負けやすい
+  */
+
+  let marginPenalty;
+
+
+  if(margin < 0.5) {
+
+    marginPenalty = 0.45;
+
+  }
+
+  else if(margin < 1.5) {
+
+    marginPenalty = 0.30;
+
+  }
+
+  else if(margin < 3) {
+
+    marginPenalty = 0.18;
+
+  }
+
+  else if(margin < 6) {
+
+    marginPenalty = 0.08;
+
+  }
+
+  else {
+
+    marginPenalty = 0.02;
+
+  }
+
+
+  return Math.min(
+    0.75,
+    difficultyFactor + marginPenalty
   );
 
 }
@@ -3773,12 +3917,12 @@ function purchase() {
 ===================================================== */
 
 function showResult(
-  success,
+  outcome,
   totalTime
 ) {
 
-  lastResultSuccess =
-    success;
+  lastResultOutcome =
+    outcome;
 
 
   const title =
@@ -3810,7 +3954,7 @@ function showResult(
     totalTime.toFixed(3);
 
 
-  if(success) {
+  if(outcome === "success") {
 
 
     const margin =
@@ -3846,6 +3990,60 @@ function showResult(
         秒の余裕で購入できました！
 
       </div>
+
+    `;
+
+  }
+
+  else if(outcome === "raceLoss") {
+
+
+    const margin =
+      target.sellOut
+      - totalTime;
+
+
+    title.textContent =
+      "😭 買い負け……";
+
+
+    title.className =
+      "failure";
+
+
+    subtitle.textContent =
+      "時間には間に合いましたが、"
+      + "一足早い挑戦者に"
+      + "購入されてしまいました。";
+
+
+    details.innerHTML = `
+
+      <div class="warning">
+
+        売り切れ時間：
+        ${target.sellOut.toFixed(3)}秒
+
+      </div>
+
+
+      <div class="result-time failure">
+
+        ${margin.toFixed(3)}
+        秒の余裕があったのに、
+        買い負けてしまいました……
+
+      </div>
+
+
+      <p class="small">
+
+        人気チケットは時間内でも
+        早い者勝ちです。
+        もっと早く購入を
+        確定させましょう！
+
+      </p>
 
     `;
 
@@ -3920,14 +4118,14 @@ function showResult(
 
   calculateScore(
     totalTime,
-    success
+    outcome
   );
 
 
   show("result");
 
 
-  if(success) {
+  if(outcome === "success") {
 
     launchConfetti();
 
@@ -3948,8 +4146,12 @@ function showResult(
 
 function calculateScore(
   totalTime,
-  success
+  outcome
 ) {
+
+  const success =
+    outcome === "success";
+
 
   let score = 0;
 
@@ -4050,7 +4252,7 @@ function calculateScore(
     score,
     rank,
     totalTime,
-    success
+    outcome
   );
 
 }
@@ -4064,7 +4266,7 @@ function saveResultAndUpdateRanking(
   score,
   rank,
   totalTime,
-  success
+  outcome
 ) {
 
   const date =
@@ -4089,7 +4291,9 @@ function saveResultAndUpdateRanking(
 
     time: totalTime,
 
-    success: success,
+    success: outcome === "success",
+
+    outcome: outcome,
 
     ticket:
       date.team + "戦 / "
@@ -4261,6 +4465,42 @@ function showRanking() {
 }
 
 
+/*
+  結果の種類を
+  日本語ラベルに変換
+
+  古い記録（outcomeが
+  無いもの）にも対応
+*/
+
+function outcomeLabel(record) {
+
+  const outcome =
+    record.outcome
+    ?? (
+      record.success
+        ? "success"
+        : "soldOut"
+    );
+
+
+  if(outcome === "success") {
+
+    return "購入成功";
+
+  }
+
+  if(outcome === "raceLoss") {
+
+    return "買い負け";
+
+  }
+
+  return "売り切れ";
+
+}
+
+
 function renderRanking() {
 
   const list =
@@ -4321,11 +4561,7 @@ function renderRanking() {
 
             <div class="small">
               ${r.time.toFixed(3)}秒 /
-              ${
-                r.success
-                  ? "購入成功"
-                  : "売り切れ"
-              } /
+              ${outcomeLabel(r)} /
               ${r.date}
             </div>
 
@@ -4370,9 +4606,9 @@ function buildShareText() {
 
 
   const resultWord =
-    lastResultSuccess
-      ? "購入成功"
-      : "売り切れ";
+    outcomeLabel({
+      outcome: lastResultOutcome
+    });
 
 
   return (
