@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TICKET BATTLE GAME</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  background: #f4f6f9;
+  color: #171717;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.header {
+  background: #111827;
+  color: white;
+  padding: 18px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-inner {
+  max-width: 850px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.header-sub {
+  font-size: 11px;
+  color: #aeb7c5;
+}
+
+.container {
+  max-width: 850px;
+  margin: auto;
+  padding: 25px 15px 50px;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #667085;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.badge {
+  display: inline-block;
+  background: #111827;
+  color: white;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.countdown {
+  text-align: center;
+  padding: 35px 10px;
+}
+
+.countdown-number {
+  font-size: 76px;
+  font-weight: 900;
+  color: #e11d48;
+  line-height: 1;
+  margin: 20px 0;
+}
+
+.release-text {
+  font-size: 25px;
+  font-weight: 900;
+}
+
+.reload-box {
+  background: #fff7ed;
+  border: 2px solid #fb923c;
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.reload-box strong {
+  color: #ea580c;
+}
+
+.big-button {
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  padding: 16px;
+  font-weight: 900;
+  font-size: 17px;
+  color: white;
+  background: #111827;
+  margin-top: 15px;
+}
+
+.big-button:hover {
+  opacity: 0.9;
+}
+
+.blue-button {
+  background: #2563eb;
+}
+
+.red-button {
+  background: #dc2626;
+}
+
+.green-button {
+  background: #059669;
+}
+
+.gray-button {
+  background: #64748b;
+}
+
+.progress {
+  height: 13px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #2563eb, #7c3aed, #db2777);
+  transition: width .2s;
+}
+
+.queue-number {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 900;
+  margin: 20px 0 5px;
+}
+
+.queue-label {
+  text-align: center;
+  color: #667085;
+}
+
+.fast {
+  color: #059669;
+  font-weight: 900;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 900;
+  margin-bottom: 16px;
+}
+
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.option {
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 15px;
+  background: white;
+  text-align: left;
+  transition: .15s;
+}
+
+.option:hover {
+  border-color: #2563eb;
+}
+
+.option.selected {
+  border-color: #2563eb;
+  background: #eff6ff;
+  box-shadow: 0 0 0 2px #bfdbfe;
+}
+
+.option-name {
+  font-weight: 900;
+}
+
+.option-info {
+  font-size: 12px;
+  color: #667085;
+  margin-top: 6px;
+}
+
+.difficulty {
+  margin-top: 7px;
+  font-size: 13px;
+}
+
+.fire {
+  letter-spacing: -2px;
+}
+
+.form-row {
+  margin-bottom: 15px;
+}
+
+.form-row label {
+  display: block;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.form-row input,
+.form-row select {
+  width: 100%;
+  border: 1px solid #d0d5dd;
+  border-radius: 10px;
+  padding: 13px;
+  background: white;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.notice {
+  background: #f8fafc;
+  border-left: 4px solid #2563eb;
+  padding: 13px;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 15px 0;
+}
+
+.warning {
+  background: #fff7ed;
+  border-left: 4px solid #f97316;
+}
+
+.result-main {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.result-success {
+  color: #059669;
+  font-size: 38px;
+  font-weight: 900;
+}
+
+.result-ticket {
+  background: #111827;
+  color: white;
+  border-radius: 18px;
+  padding: 22px;
+  margin: 20px 0;
+}
+
+.ticket-title {
+  font-size: 12px;
+  color: #aeb7c5;
+  letter-spacing: 1px;
+}
+
+.ticket-name {
+  font-size: 25px;
+  font-weight: 900;
+  margin: 8px 0 18px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.stat {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+.stat-label {
+  color: #667085;
+  font-size: 12px;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 900;
+  margin-top: 5px;
+}
+
+.score-row {
+  margin: 15px 0;
+}
+
+.score-head {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.score-bg {
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.score-fill {
+  height: 100%;
+  background: #2563eb;
+  border-radius: 999px;
+}
+
+.rank {
+  text-align: center;
+  font-size: 55px;
+  font-weight: 1000;
+  margin: 10px 0;
+}
+
+.small {
+  font-size: 12px;
+  color: #667085;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.center {
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .option-grid,
+  .form-grid,
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .countdown-number {
+    font-size: 60px;
+  }
+
+  .queue-number {
+    font-size: 34px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">TICKET BATTLE</div>
+    <div class="header-sub">TICKET RUSH SIMULATOR</div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- START -->
+  <section id="startScreen" class="card">
+    <span class="badge">HANSHIN STYLE TICKET BATTLE</span>
+
+    <div class="title">チケット争奪戦ゲーム</div>
+
+    <div class="subtitle">
+      発売開始の瞬間を狙ってページをリロードし、<br>
+      待機列を突破してチケットを獲得しよう。
+    </div>
+
+    <div class="notice">
+      このゲームは架空のチケット販売ゲームです。<br>
+      実際のチケット購入・決済は行われません。
+    </div>
+
+    <button class="big-button blue-button" onclick="startGame()">
+      ゲーム開始
+    </button>
+  </section>
+
+
+  <!-- COUNTDOWN -->
+  <section id="countdownScreen" class="card hidden">
+    <div class="countdown">
+      <span class="badge">一般発売・先着順</span>
+
+      <div class="subtitle">チケット発売まで</div>
+
+      <div id="countdownNumber" class="countdown-number">5</div>
+
+      <div id="countdownMessage" class="subtitle">
+        発売開始を待っています
+      </div>
+    </div>
+  </section>
+
+
+  <!-- RELEASE -->
+  <section id="releaseScreen" class="card hidden">
+    <div class="countdown">
+      <span class="badge">発売開始</span>
+
+      <div class="release-text">
+        チケット発売開始！
+      </div>
+
+      <div class="reload-box">
+        <strong>ページをリロードしてください</strong>
+        <br><br>
+        リロードしたタイミングで待機列の順位が決まります。
+        <br>
+        <span class="small">
+          できるだけ早くリロードしよう！
+        </span>
+      </div>
+
+      <button class="big-button red-button" onclick="manualReload()">
+        🔄 ページをリロードする
+      </button>
+
+      <div class="small center" style="margin-top:12px;">
+        ※実際のブラウザ更新ではなくゲーム内で再現します
+      </div>
+    </div>
+  </section>
+
+
+  <!-- QUEUE -->
+  <section id="queueScreen" class="card hidden">
+    <span class="badge">WAITING QUEUE</span>
+
+    <div class="title">待機列</div>
+
+    <div class="subtitle">
+      発売開始直後のアクセスが集中しています。
+    </div>
+
+    <div class="queue-number">
+      <span id="queuePosition">0</span>
+    </div>
+
+    <div class="queue-label">
+      人待ち
+    </div>
+
+    <div class="progress">
+      <div id="queueProgress" class="progress-bar"></div>
+    </div>
+
+    <div class="center">
+      <span id="queueSpeed" class="fast"></span>
+    </div>
+
+    <div class="notice">
+      順番にご案内しています。<br>
+      このゲームでは待機列を高速で進めています。
+    </div>
+  </section>
+
+
+  <!-- TARGET -->
+  <section id="targetScreen" class="hidden">
+
+    <div class="card">
+      <span class="badge">STEP 1</span>
+      <div class="section-title">日程を選択</div>
+
+      <div id="dateOptions" class="option-grid"></div>
+    </div>
+
+    <div class="card">
+      <span class="badge">STEP 2</span>
+      <div class="section-title">座席種類を選択</div>
+
+      <div id="seatOptions" class="option-grid"></div>
+    </div>
+
+    <div class="card">
+      <span class="badge">STEP 3</span>
+      <div class="section-title">枚数を選択</div>
+
+      <div class="form-row">
+        <select id="quantity">
+          <option value="1">1枚</option>
+          <option value="2">2枚</option>
+          <option value="3">3枚</option>
+          <option value="4">4枚</option>
+        </select>
+      </div>
+
+      <button class="big-button blue-button" onclick="goToCustomer()">
+        この条件で購入へ
+      </button>
+    </div>
+
+  </section>
+
+
+  <!-- CUSTOMER -->
+  <section id="customerScreen" class="hidden">
+
+    <div class="card">
+      <span class="badge">STEP 4</span>
+      <div class="section-title">購入者情報</div>
+
+      <div class="notice">
+        ゲーム内で使用する架空の購入者情報です。
+        実際の個人情報やカード情報は入力しないでください。
+      </div>
+
+      <div class="form-row">
+        <label>氏名</label>
+        <input id="customerName" placeholder="ゲーム用の名前">
+      </div>
+
+      <div class="form-row">
+        <label>メールアドレス</label>
+        <input id="customerEmail" type="email"
+               placeholder="example@game.local">
+      </div>
+
+      <div class="form-row">
+        <label>住所</label>
+        <input id="customerAddress"
+               placeholder="ゲーム用住所">
+      </div>
+
+      <button class="big-button blue-button"
+              onclick="goToPayment()">
+        次へ：支払い方法
+      </button>
+    </div>
+
+  </section>
+
+
+  <!-- PAYMENT -->
+  <section id="paymentScreen" class="hidden">
+
+    <div class="card">
+      <span class="badge">STEP 5</span>
+      <div class="section-title">支払い方法</div>
+
+      <div class="notice warning">
+        ⚠️ ここは完全にゲーム用のダミー決済です。<br>
+        実際のクレジットカード番号・暗証番号・CVVなどは入力しないでください。
+      </div>
+
+      <div class="form-row">
+        <label>ゲーム用カード番号</label>
+        <input id="cardNumber"
+               inputmode="numeric"
+               maxlength="19"
+               placeholder="0000 0000 0000 0000">
+      </div>
+
+      <div class="form-grid">
+
+        <div class="form-row">
+          <label>有効期限（ゲーム用）</label>
+          <input id="cardExpiry"
+                 placeholder="12/30">
+        </div>
+
+        <div class="form-row">
+          <label>ゲーム認証コード（3桁）</label>
+          <input id="securityCode"
+                 inputmode="numeric"
+                 maxlength="3"
+                 placeholder="3桁を入力">
+        </div>
+
+      </div>
+
+      <div class="notice">
+        ゲーム認証コードは、このゲーム内だけで使用する
+        架空の3桁コードです。
+      </div>
+
+      <button class="big-button green-button"
+              onclick="completePurchase()">
+        購入を確定する
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- RESULT -->
+  <section id="resultScreen" class="hidden">
+
+    <div class="card">
+
+      <div class="result-main">
+        <div class="result-success">
+          🎉 購入成功！
+        </div>
+
+        <div class="subtitle">
+          チケットを確保しました！
+        </div>
+      </div>
+
+      <div class="result-ticket">
+
+        <div class="ticket-title">
+          TICKET BATTLE GAME
+        </div>
+
+        <div id="resultDate" class="ticket-name"></div>
+
+        <div id="resultSeat"></div>
+        <div id="resultQuantity"></div>
+
+      </div>
+
+      <div class="stats">
+
+        <div class="stat">
+          <div class="stat-label">総合タイム</div>
+          <div id="totalTime" class="stat-value"></div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">待機列</div>
+          <div id="queueTime" class="stat-value"></div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">座席選択</div>
+          <div id="seatTime" class="stat-value"></div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">入力・決済</div>
+          <div id="inputTime" class="stat-value"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- SCORE -->
+    <div class="card">
+
+      <span class="badge">PLAYER SCORE</span>
+
+      <div class="section-title">
+        個別能力スコア
+      </div>
+
+      <div class="score-row">
+        <div class="score-head">
+          <span>⚡ リロードの速さ</span>
+          <span id="reloadScoreText">0</span>
+        </div>
+        <div class="score-bg">
+          <div id="reloadScore" class="score-fill"></div>
+        </div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-head">
+          <span>🎯 タップの正確さ</span>
+          <span id="accuracyScoreText">0</span>
+        </div>
+        <div class="score-bg">
+          <div id="accuracyScore" class="score-fill"></div>
+        </div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-head">
+          <span>💺 座席選択の速さ</span>
+          <span id="seatScoreText">0</span>
+        </div>
+        <div class="score-bg">
+          <div id="seatScore" class="score-fill"></div>
+        </div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-head">
+          <span>⌨️ 入力の速さ</span>
+          <span id="inputScoreText">0</span>
+        </div>
+        <div class="score-bg">
+          <div id="inputScore" class="score-fill"></div>
+        </div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-head">
+          <span>🔥 混雑からの復帰</span>
+          <span id="queueScoreText">0</span>
+        </div>
+        <div class="score-bg">
+          <div id="queueScore" class="score-fill"></div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="card center">
+
+      <div class="small">
+        YOUR RANK
+      </div>
+
+      <div id="rank" class="rank">
+        A
+      </div>
+
+      <div id="points" class="subtitle"></div>
+
+      <button class="big-button blue-button"
+              onclick="location.reload()">
+        もう一度挑戦する
+      </button>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<script>
+
+/* ==============================
+   ゲームデータ
+============================== */
+
+const dates = [
+  {
+    name: "9月20日（日）",
+    opponent: "架空チームA",
+    popularity: 5
+  },
+  {
+    name: "9月21日（月・祝）",
+    opponent: "架空チームB",
+    popularity: 5
+  },
+  {
+    name: "9月27日（日）",
+    opponent: "架空チームC",
+    popularity: 4
+  },
+  {
+    name: "9月28日（月）",
+    opponent: "架空チームD",
+    popularity: 3
+  },
+  {
+    name: "10月4日（日）",
+    opponent: "架空チームE",
+    popularity: 2
+  },
+  {
+    name: "10月5日（月）",
+    opponent: "架空チームF",
+    popularity: 2
+  }
+];
+
+
+const seats = [
+  {
+    name: "ネット裏",
+    difficulty: 6,
+    stock: 320
+  },
+  {
+    name: "グリーンシート 1塁側",
+    difficulty: 4,
+    stock: 1500
+  },
+  {
+    name: "グリーンシート 3塁側",
+    difficulty: 4,
+    stock: 1500
+  },
+  {
+    name: "1塁アルプス",
+    difficulty: 3,
+    stock: 3000
+  },
+  {
+    name: "3塁アルプス",
+    difficulty: 3,
+    stock: 3000
+  },
+  {
+    name: "ライト外野",
+    difficulty: 5,
+    stock: 1800
+  },
+  {
+    name: "レフト外野",
+    difficulty: 2,
+    stock: 3500
+  }
+];
+
+
+/* ==============================
+   状態
+============================== */
+
+let gameStartTime = 0;
+let releaseTime = 0;
+let reloadTime = 0;
+
+let selectedDate = null;
+let selectedSeat = null;
+let selectedQuantity = 1;
+
+let queueStartTime = 0;
+let queueEndTime = 0;
+let targetStartTime = 0;
+let customerStartTime = 0;
+
+let authCode = "";
+let seatSelectionTime = 0;
+let inputTime = 0;
+
+
+/* ==============================
+   画面切り替え
+============================== */
+
+function hideAll() {
+
+  const screens = [
+    "startScreen",
+    "countdownScreen",
+    "releaseScreen",
+    "queueScreen",
+    "targetScreen",
+    "customerScreen",
+    "paymentScreen",
+    "resultScreen"
+  ];
+
+  screens.forEach(id => {
+    document.getElementById(id).classList.add("hidden");
+  });
+}
+
+
+/* ==============================
+   ゲーム開始
+============================== */
+
+function startGame() {
+
+  localStorage.removeItem("ticketBattle");
+
+  gameStartTime = performance.now();
+
+  hideAll();
+
+  document
+    .getElementById("countdownScreen")
+    .classList.remove("hidden");
+
+  startCountdown();
+}
+
+
+/* ==============================
+   カウントダウン
+============================== */
+
+function startCountdown() {
+
+  let count = 5;
+
+  const number =
+    document.getElementById("countdownNumber");
+
+  const message =
+    document.getElementById("countdownMessage");
+
+  number.textContent = count;
+
+  const timer = setInterval(() => {
+
+    count--;
+
+    if (count > 0) {
+
+      number.textContent = count;
+
+    } else {
+
+      clearInterval(timer);
+
+      number.textContent = "🎫";
+
+      message.textContent =
+        "チケット発売開始！";
+
+      releaseTime = Date.now();
+
+      localStorage.setItem(
+        "ticketBattle",
+        JSON.stringify({
+          releaseTime: releaseTime
+        })
+      );
+
+      setTimeout(() => {
+
+        hideAll();
+
+        document
+          .getElementById("releaseScreen")
+          .classList.remove("hidden");
+
+      }, 500);
+
+    }
+
+  }, 1000);
+}
+
+
+/* ==============================
+   手動リロード
+============================== */
+
+function manualReload() {
+
+  const data =
+    JSON.parse(
+      localStorage.getItem("ticketBattle") || "{}"
+    );
+
+  if (!data.releaseTime) {
+
+    alert("まだ発売開始していません。");
+
+    return;
+  }
+
+  reloadTime = Date.now();
+
+  const difference =
+    Math.max(
+      0,
+      reloadTime - data.releaseTime
+    );
+
+  startQueue(difference);
+}
+
+
+/* ==============================
+   待機列
+============================== */
+
+function startQueue(difference) {
+
+  hideAll();
+
+  document
+    .getElementById("queueScreen")
+    .classList.remove("hidden");
+
+  queueStartTime = performance.now();
+
+  let initialPosition;
+
+  /*
+    0.005秒単位を意識したゲーム判定
+  */
+
+  if (difference <= 5) {
+
+    initialPosition =
+      randomInt(100, 500);
+
+  } else if (difference <= 10) {
+
+    initialPosition =
+      randomInt(500, 2000);
+
+  } else if (difference <= 50) {
+
+    initialPosition =
+      randomInt(2000, 10000);
+
+  } else if (difference <= 100) {
+
+    initialPosition =
+      randomInt(10000, 30000);
+
+  } else if (difference <= 500) {
+
+    initialPosition =
+      randomInt(30000, 100000);
+
+  } else {
+
+    initialPosition =
+      randomInt(100000, 500000);
+
+  }
+
+
+  let position = initialPosition;
+
+  document.getElementById("queuePosition")
+    .textContent =
+    position.toLocaleString();
+
+
+  const total =
+    initialPosition;
+
+  /*
+    待機時間は約5～20秒
+  */
+
+  const queueDuration =
+    Math.min(
+      20000,
+      Math.max(
+        5000,
+        5000 + total / 35
+      )
+    );
+
+
+  const start = performance.now();
+
+  const interval =
+    setInterval(() => {
+
+      const elapsed =
+        performance.now() - start;
+
+      const progress =
+        Math.min(
+          1,
+          elapsed / queueDuration
+        );
+
+      /*
+        前半は速く、後半も一気に進む
+      */
+
+      const eased =
+        1 - Math.pow(1 - progress, 2);
+
+      position =
+        Math.max(
+          0,
+          Math.floor(
+            total * (1 - eased)
+          )
+        );
+
+      document.getElementById("queuePosition")
+        .textContent =
+        position.toLocaleString();
+
+      document.getElementById("queueProgress")
+        .style.width =
+        (progress * 100) + "%";
+
+      document.getElementById("queueSpeed")
+        .textContent =
+        "高速で順番が進んでいます…";
+
+      if (progress >= 1) {
+
+        clearInterval(interval);
+
+        queueEndTime =
+          performance.now();
+
+        document.getElementById("queuePosition")
+          .textContent = "0";
+
+        document.getElementById("queueProgress")
+          .style.width = "100%";
+
+        document.getElementById("queueSpeed")
+          .textContent =
+          "✓ 待機列を突破しました！";
+
+        setTimeout(() => {
+
+          showTargets();
+
+        }, 700);
+
+      }
+
+    }, 100);
+
+}
+
+
+/* ==============================
+   日程・座席
+============================== */
+
+function showTargets() {
+
+  hideAll();
+
+  document
+    .getElementById("targetScreen")
+    .classList.remove("hidden");
+
+  targetStartTime =
+    performance.now();
+
+  renderDates();
+  renderSeats();
+}
+
+
+function renderDates() {
+
+  const container =
+    document.getElementById("dateOptions");
+
+  container.innerHTML = "";
+
+  dates.forEach((date, index) => {
+
+    const button =
+      document.createElement("button");
+
+    button.className = "option";
+
+    button.innerHTML = `
+      <div class="option-name">
+        ${date.name}
+      </div>
+
+      <div class="option-info">
+        ${date.opponent}
+      </div>
+
+      <div class="difficulty">
+        人気度：
+        ${"★".repeat(date.popularity)}
+        ${"☆".repeat(5 - date.popularity)}
+      </div>
+    `;
+
+    button.onclick = () => {
+
+      selectedDate = index;
+
+      document
+        .querySelectorAll("#dateOptions .option")
+        .forEach(el =>
+          el.classList.remove("selected")
+        );
+
+      button.classList.add("selected");
+    };
+
+    container.appendChild(button);
+
+  });
+}
+
+
+function renderSeats() {
+
+  const container =
+    document.getElementById("seatOptions");
+
+  container.innerHTML = "";
+
+  seats.forEach((seat, index) => {
+
+    const button =
+      document.createElement("button");
+
+    button.className = "option";
+
+    button.innerHTML = `
+      <div class="option-name">
+        ${seat.name}
+      </div>
+
+      <div class="option-info">
+        架空販売席数：約${seat.stock.toLocaleString()}席
+      </div>
+
+      <div class="difficulty">
+        難易度：
+        <span class="fire">
+          ${"🔥".repeat(seat.difficulty)}
+        </span>
+      </div>
+    `;
+
+    button.onclick = () => {
+
+      selectedSeat = index;
+
+      document
+        .querySelectorAll("#seatOptions .option")
+        .forEach(el =>
+          el.classList.remove("selected")
+        );
+
+      button.classList.add("selected");
+    };
+
+    container.appendChild(button);
+
+  });
+}
+
+
+/* ==============================
+   購入者情報
+============================== */
+
+function goToCustomer() {
+
+  if (
+    selectedDate === null ||
+    selectedSeat === null
+  ) {
+
+    alert(
+      "日程と座席種類を選択してください。"
+    );
+
+    return;
+  }
+
+  selectedQuantity =
+    Number(
+      document.getElementById("quantity").value
+    );
+
+  seatSelectionTime =
+    performance.now() - targetStartTime;
+
+  customerStartTime =
+    performance.now();
+
+  hideAll();
+
+  document
+    .getElementById("customerScreen")
+    .classList.remove("hidden");
+
+  /*
+    ゲーム用の入力値だけ保存
+  */
+
+  document.getElementById("customerName").value =
+    localStorage.getItem("gameName") || "";
+
+  document.getElementById("customerEmail").value =
+    localStorage.getItem("gameEmail") || "";
+
+  document.getElementById("customerAddress").value =
+    localStorage.getItem("gameAddress") || "";
+}
+
+
+function goToPayment() {
+
+  const name =
+    document.getElementById("customerName").value.trim();
+
+  const email =
+    document.getElementById("customerEmail").value.trim();
+
+  const address =
+    document.getElementById("customerAddress").value.trim();
+
+
+  if (!name || !email || !address) {
+
+    alert(
+      "ゲーム用の購入者情報をすべて入力してください。"
+    );
+
+    return;
+  }
+
+
+  /*
+    ゲーム用情報だけ保存
+  */
+
+  localStorage.setItem(
+    "gameName",
+    name
+  );
+
+  localStorage.setItem(
+    "gameEmail",
+    email
+  );
+
+  localStorage.setItem(
+    "gameAddress",
+    address
+  );
+
+
+  inputTime =
+    performance.now() - customerStartTime;
+
+
+  /*
+    架空の3桁ゲーム認証コード
+  */
+
+  authCode =
+    String(
+      randomInt(100, 999)
+    );
+
+
+  console.log(
+    "ゲーム認証コード:",
+    authCode
+  );
+
+
+  hideAll();
+
+  document
+    .getElementById("paymentScreen")
+    .classList.remove("hidden");
+}
+
+
+/* ==============================
+   購入確定
+============================== */
+
+function completePurchase() {
+
+  const card =
+    document
+      .getElementById("cardNumber")
+      .value
+      .replace(/\s/g, "");
+
+  const expiry =
+    document
+      .getElementById("cardExpiry")
+      .value.trim();
+
+  const security =
+    document
+      .getElementById("securityCode")
+      .value.trim();
+
+
+  /*
+    完全にゲーム用のダミー入力
+  */
+
+  if (
+    card !== "0000000000000000"
+  ) {
+
+    alert(
+      "ゲーム用カード番号は「0000 0000 0000 0000」を入力してください。"
+    );
+
+    return;
+  }
+
+
+  if (!expiry) {
+
+    alert(
+      "ゲーム用の有効期限を入力してください。"
+    );
+
+    return;
+  }
+
+
+  if (!/^\d{3}$/.test(security)) {
+
+    alert(
+      "ゲーム認証コードは3桁の数字を入力してください。"
+    );
+
+    return;
+  }
+
+
+  /*
+    ゲームでは任意の3桁を受け付ける
+    実際のカード認証は行わない
+  */
+
+  const totalTime =
+    (performance.now() - gameStartTime) / 1000;
+
+  const queueSeconds =
+    (queueEndTime - queueStartTime) / 1000;
+
+  const seatSeconds =
+    seatSelectionTime / 1000;
+
+  const inputSeconds =
+    inputTime / 1000;
+
+
+  showResult(
+    totalTime,
+    queueSeconds,
+    seatSeconds,
+    inputSeconds
+  );
+}
+
+
+/* ==============================
+   結果
+============================== */
+
+function showResult(
+  totalTime,
+  queueSeconds,
+  seatSeconds,
+  inputSeconds
+) {
+
+  hideAll();
+
+  document
+    .getElementById("resultScreen")
+    .classList.remove("hidden");
+
+
+  const date =
+    dates[selectedDate];
+
+  const seat =
+    seats[selectedSeat];
+
+
+  document.getElementById("resultDate")
+    .textContent =
+    date.name;
+
+
+  document.getElementById("resultSeat")
+    .textContent =
+    seat.name;
+
+
+  document.getElementById("resultQuantity")
+    .textContent =
+    `${selectedQuantity}枚 / ${date.opponent}`;
+
+
+  document.getElementById("totalTime")
+    .textContent =
+    totalTime.toFixed(2) + "秒";
+
+
+  document.getElementById("queueTime")
+    .textContent =
+    queueSeconds.toFixed(2) + "秒";
+
+
+  document.getElementById("seatTime")
+    .textContent =
+    seatSeconds.toFixed(2) + "秒";
+
+
+  document.getElementById("inputTime")
+    .textContent =
+    inputSeconds.toFixed(2) + "秒";
+
+
+  /*
+    スコア計算
+  */
+
+  const reloadDelay =
+    Math.max(
+      0,
+      reloadTime - releaseTime
+    );
+
+
+  let reloadScore;
+
+  if (reloadDelay <= 5) {
+    reloadScore = 100;
+  } else if (reloadDelay <= 10) {
+    reloadScore = 95;
+  } else if (reloadDelay <= 50) {
+    reloadScore = 85;
+  } else if (reloadDelay <= 100) {
+    reloadScore = 75;
+  } else if (reloadDelay <= 500) {
+    reloadScore = 60;
+  } else {
+    reloadScore = 40;
+  }
+
+
+  /*
+    座席選択
+  */
+
+  let seatScore =
+    Math.max(
+      40,
+      Math.min(
+        100,
+        110 - seatSeconds * 12
+      )
+    );
+
+
+  /*
+    入力
+  */
+
+  let inputScore =
+    Math.max(
+      40,
+      Math.min(
+        100,
+        105 - inputSeconds * 10
+      )
+    );
+
+
+  /*
+    混雑突破
+  */
+
+  let queueScore =
+    Math.max(
+      50,
+      Math.min(
+        100,
+        100 - queueSeconds * 1.5
+      )
+    );
+
+
+  /*
+    タップ正確さ
+  */
+
+  let accuracyScore =
+    Math.max(
+      60,
+      Math.min(
+        100,
+        100 - seat.difficulty * 2 + randomInt(-3, 3)
+      )
+    );
+
+
+  setScore(
+    "reloadScore",
+    "reloadScoreText",
+    reloadScore
+  );
+
+  setScore(
+    "accuracyScore",
+    "accuracyScoreText",
+    accuracyScore
+  );
+
+  setScore(
+    "seatScore",
+    "seatScoreText",
+    Math.round(seatScore)
+  );
+
+  setScore(
+    "inputScore",
+    "inputScoreText",
+    Math.round(inputScore)
+  );
+
+  setScore(
+    "queueScore",
+    "queueScoreText",
+    Math.round(queueScore)
+  );
+
+
+  /*
+    総合ポイント
+  */
+
+  const totalScore =
+    Math.round(
+      (
+        reloadScore +
+        accuracyScore +
+        seatScore +
+        inputScore +
+        queueScore
+      ) / 5
+    );
+
+
+  let rank;
+
+  if (totalScore >= 95) {
+    rank = "SSS";
+  } else if (totalScore >= 90) {
+    rank = "SS";
+  } else if (totalScore >= 82) {
+    rank = "S";
+  } else if (totalScore >= 75) {
+    rank = "A";
+  } else if (totalScore >= 65) {
+    rank = "B";
+  } else if (totalScore >= 50) {
+    rank = "C";
+  } else {
+    rank = "D";
+  }
+
+
+  document.getElementById("rank")
+    .textContent =
+    rank;
+
+
+  document.getElementById("points")
+    .textContent =
+    `総合スコア ${totalScore} / 100　・　${totalScore * 10} POINTS`;
+}
+
+
+/* ==============================
+   スコア表示
+============================== */
+
+function setScore(
+  barId,
+  textId,
+  score
+) {
+
+  score =
+    Math.round(
+      Math.max(
+        0,
+        Math.min(
+          100,
+          score
+        )
+      )
+    );
+
+  document.getElementById(barId)
+    .style.width =
+    score + "%";
+
+  document.getElementById(textId)
+    .textContent =
+    score;
+}
+
+
+/* ==============================
+   ランダム数字
+============================== */
+
+function randomInt(min, max) {
+
+  return Math.floor(
+    Math.random() *
+    (max - min + 1)
+  ) + min;
+}
+
+</script>
+
+</body>
+</html>
